@@ -1,0 +1,27 @@
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  kafka:
+    properties:
+      #Server host name verification is disabled by setting ssl.endpoint.identification.algorithm to an empty string
+      ssl.endpoint.identification.algorithm:
+    security:
+      protocol: SSL
+    ssl:
+      protocol: SSL
+      trust-store-location: file:/VJ/truststore.jks
+      trust-store-password: ${KAFKA_TRUSTSTORE_PASSWORD}
+      key-store-location: file:/VJ/keystore.jks
+      key-store-password: ${KAFKA_KEYSTORE_PASSWORD}
+    bootstrap-servers: localhost:9093
+    producer:
+      compression-type: lz4
+      max:
+        request:
+          size: 4000000
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: reactivekafka8
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
